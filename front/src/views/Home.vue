@@ -3,6 +3,7 @@
     <Header />
     <div class="content">
       <h1 class="title">Feed</h1>
+      <NewPost />
       <Post />
     </div> 
   </div>
@@ -11,11 +12,13 @@
 <script>
 import Header from '../components/Header'
 import Post from '../components/Post'
+import NewPost from '../components/NewPost'
 
 export default {
   components: {
     Header,
-    Post
+    Post,
+    NewPost
   }
 }
 </script>

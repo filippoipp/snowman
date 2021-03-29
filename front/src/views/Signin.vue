@@ -31,7 +31,7 @@
           ></v-text-field>
         </div>
         <div class="button-space">
-          <button class="enter" :disabled="!form.isValid" @click.prevent="formSubmit()">aaaaa</button>
+          <button class="enter" :disabled="!form.isValid" @click.prevent="formSubmit()">Entrar</button>
         </div>
       </v-form>
       <div class="footer">

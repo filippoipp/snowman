@@ -12,7 +12,9 @@
         <router-link :to="'/signin'">
           <p>Login</p>
         </router-link>
-        <button>Cadastre-se</button>
+        <router-link :to="'/signup'">
+          <button>Cadastre-se</button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -55,6 +57,9 @@
     letter-spacing: 0;
     line-height: 22px;
     color: #111236;
+  }
+  a {
+    text-decoration: none;
   }
   button {
     width: 148px;
