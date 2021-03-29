@@ -86,7 +86,7 @@
         </div>
       </div>
       <div>
-        <button>Publicar</button>
+        <button @click.prevent="createPost()">Publicar</button>
       </div>
     </div>
   </div>
@@ -118,7 +118,11 @@ export default {
     this.newPost.user_name = this.currentUser.name;
   },
 
-  methods: {},
+  methods: {
+    createPost() {
+      console.log(this.newPost)
+    }
+  },
 };
 </script>
 

@@ -1,13 +1,11 @@
 <template>
-  <div class="card">
+  <div class="card" :style="style">
     <div class="user">
-      <span>João Silva</span>
+      <span>{{ user_name }}</span>
     </div>
     <div class="text">
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation
+        {{text}}
       </p>
     </div>
   </div>
@@ -15,7 +13,12 @@
 
 <script>
 export default {
-  props: ["user", "text", "color"],
+  props: ["user_name", "text", "color"],
+  computed: {
+    style () {
+        return 'border-left: 6px solid '+ this.color;
+      }
+    },
 };
 </script>
 
