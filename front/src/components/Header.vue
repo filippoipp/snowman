@@ -3,12 +3,11 @@
     <div id="nav">
       <div class="avatar">
         <v-avatar color="indigo" size="56">
-          <v-icon size="56">
-            mdi-account-circle
-          </v-icon>
+          <v-icon size="56"> mdi-account-circle </v-icon>
         </v-avatar>
+        <p v-if="currentUser">Olá, <strong>{{ currentUser.name }}</strong></p>
       </div>
-      <div class="signin-signup">
+      <div class="signin-signup" v-if="!currentUser">
         <router-link :to="'/signin'">
           <p>Login</p>
         </router-link>
@@ -16,14 +15,32 @@
           <button>Cadastre-se</button>
         </router-link>
       </div>
+      <div class="search-logout" v-else>
+        <div class="search">
+
+        </div>
+        <div @click.prevent="logout()">
+          <p>Sair</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["currentUser"]),
+  },
+
+  methods: {
+    logout() {
+
+    }
   }
+};
 </script>
 
 <style lang="scss">
@@ -44,7 +61,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 2px 4px 25px 0 rgba(0,0,0,0.06);
+  box-shadow: 2px 4px 25px 0 rgba(0, 0, 0, 0.06);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  p {
+    color: #111236;
+    font-size: 16px;
+    line-height: 22px;
+    }
 }
 
 .signin-signup {
@@ -64,13 +91,25 @@
   button {
     width: 148px;
     height: 40px;
-    background: #10159A;
+    background: #10159a;
     border-radius: 6px;
     color: #ffff;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
     line-height: 22px;
+  }
+}
+
+.search-logout {
+  display: flex;
+  align-items: center;
+
+  p {
+    color: #111236;
+    font-size: 16px;
+    line-height: 22px;
+    cursor: pointer;
   }
 }
 </style>

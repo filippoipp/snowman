@@ -59,7 +59,7 @@ export default {
           payload.password
         );
 
-        const item = { token: user.access_token, client_id: user.client_id, role: user.profile };
+        const item = { token: user.token, user_id: user.user.id, name: user.user.name };
         setCurrentUser(item);
         commit("setUser", item);
       } catch (err) {

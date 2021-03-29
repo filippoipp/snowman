@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="user">
-      <span>João Silva</span>
+      <span>{{currentUser.name}}</span>
       <div>
           
       </div>
@@ -24,7 +24,13 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["currentUser"]),
+  },
+};
 </script>
 
 <style lang="scss">
@@ -52,9 +58,10 @@ export default {};
 .text {
   padding: 23px 30px 23px 30px;
   border-bottom: 1px solid #f5f5fd;
+  
   textarea {
     width: 100% !important;
-    color: #979797;
+    color: #111236;
     font-size: 24px;
     line-height: 32px;
   }

@@ -50,6 +50,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
+      error: false,
       form: {
         email: null,
         password: null,
@@ -66,13 +67,19 @@ export default {
   computed: {
     ...mapGetters(["currentUser", "processing", "loginError"]),
   },
+
   methods: {
     ...mapActions(["login"]),
-    formSubmit() {
-      this.login({
-        email: this.form.email,
-        password: this.form.password,
-      });
+
+    async formSubmit() {
+      try {
+        await this.login({
+          email: this.form.email,
+          password: this.form.password,
+        });
+      } catch(err) {
+        console.log(err)
+      }
     },
   },
   watch: {
