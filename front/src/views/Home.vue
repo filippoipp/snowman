@@ -39,7 +39,6 @@ export default {
     async getPosts() {
       try {
         this.posts = await this.postController.getAll();
-        console.log(this.posts)
       } catch(err) {
         console.log(err)
       }

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   computed: {
@@ -36,9 +36,11 @@ export default {
   },
 
   methods: {
-    logout() {
-
-    }
+    ...mapActions(["signOut"]),
+		async logout() {
+			await this.signOut()
+			this.$router.push("/")
+		},
   }
 };
 </script>

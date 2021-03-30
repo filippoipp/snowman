@@ -6,9 +6,8 @@ class Post {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(type => User)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id'})
-    user_id: User[];
+    @Column()
+    user_id: 'uuid';
 
     @Column()
     user_name: string;

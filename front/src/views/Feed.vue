@@ -13,13 +13,45 @@
 import Header from '../components/Header'
 import Post from '../components/Post'
 import NewPost from '../components/NewPost'
+import PostController from '../controllers/postController'
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     Header,
     Post,
     NewPost
-  }
+  },
+
+  data() {
+    return {
+      posts: null
+    };
+  },
+
+  computed: {
+    ...mapGetters(["currentUser"]),
+  },
+
+  async created() {
+    this.postController = new PostController();
+  },
+
+  mounted() {
+    this.getPosts();
+  },
+
+  methods: {
+    async getPosts() {
+      console.log(this.currentUser)
+      try {
+        this.posts = await this.postController.getForFeed(this.currentUser.user_id);
+        console.log(this.posts)
+      } catch(err) {
+        console.log(err)
+      }
+    },
+  },
 }
 </script>
 <style>

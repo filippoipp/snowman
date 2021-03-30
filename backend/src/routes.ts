@@ -12,5 +12,6 @@ router.post('/users', UserController.store);
 router.post('/auth', AuthController.authenticate);
 router.post('/posts', authMiddleware, PostController.store)
 router.get('/posts', PostController.getAll)
+router.get('/posts-feed/:id', authMiddleware, PostController.getPostsForFeed)
 
 export default router
