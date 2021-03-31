@@ -94,6 +94,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import PostController from '../controllers/postController'
 
 export default {
   data() {
@@ -103,10 +104,14 @@ export default {
         user_id: null,
         user_name: null,
         text: null,
-        color: null,
+        color: '#46c9a7',
         visibility: 'public',
       }
     };
+  },
+
+  async created() {
+    this.postController = new PostController();
   },
 
   computed: {
@@ -119,8 +124,15 @@ export default {
   },
 
   methods: {
-    createPost() {
-      console.log(this.newPost)
+    async createPost() {
+      try {
+        await this.postController.create(this.newPost)
+        alert(`Post criado!`)
+      } catch(err) {
+        alert(`${err}`);
+      } finally {
+        this.$router.go(0);
+      }
     }
   },
 };
@@ -132,6 +144,7 @@ export default {
   border-radius: 8px;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   margin-bottom: 26px;
+  position: relative;
 }
 
 .user {
@@ -156,9 +169,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
-  right: 450px;
-  top: 220px;
+  position: absolute;
+  right: 35px;
+  top: 40px;
   border-radius: 8px;
   background-color: #FFFFFF;
   box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);

@@ -1,6 +1,6 @@
 import api from "../services/service.api";
 
-export default class UserController {
+export default class PostController {
     async getAll() {
 		try {
 			const posts = await api.get("/posts");
@@ -11,9 +11,9 @@ export default class UserController {
 		}	
 	}
 
-	async getForFeed(id) {
+	async getForFeed(userid) {
 		try {
-			const posts = await api.get(`/posts-feed/${id}`);
+			const posts = await api.get(`/posts-feed/${userid}`);
 			return posts.data;
 		} catch(e) {
 			console.log(e)

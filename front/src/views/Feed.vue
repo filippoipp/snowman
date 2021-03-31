@@ -9,6 +9,14 @@
           Veja o que as pessoas estão compartilhando! <strong>Siga mais pessoas</strong> para
           ter um feed personalizado.
         </span>
+        <div class="users">
+          <div v-for="(user, index) in users" :key="index">
+            <ProfileCard
+              :name="user.name"
+              :following_id="user.id"
+            />
+          </div>
+        </div>
       </div>
       <div v-for="(post, index) in posts" :key="index">
         <Post
@@ -25,7 +33,9 @@
 import Header from "../components/Header";
 import Post from "../components/Post";
 import NewPost from "../components/NewPost";
+import ProfileCard from "../components/ProfileCard"
 import PostController from "../controllers/postController";
+import UserController from "../controllers/userController"
 import { mapGetters } from "vuex";
 
 export default {
@@ -33,11 +43,13 @@ export default {
     Header,
     Post,
     NewPost,
+    ProfileCard
   },
 
   data() {
     return {
       posts: null,
+      users: null
     };
   },
 
@@ -47,10 +59,12 @@ export default {
 
   async created() {
     this.postController = new PostController();
+    this.userController = new UserController();
   },
 
   mounted() {
     this.getPosts();
+    this.getUsers();
   },
 
   methods: {
@@ -63,6 +77,22 @@ export default {
         console.log(err);
       }
     },
+
+    async getUsers() {
+      try {
+        var temp_users
+        temp_users = await this.userController.getUsers(
+          this.currentUser.user_id
+        );
+
+        if(temp_users.length > 3) {
+          this.users = temp_users.slice(0, 3)
+        }
+        
+      } catch (err) {
+        console.log(err);
+      }
+    }
   },
 };
 </script>
@@ -100,5 +130,10 @@ export default {
     text-align: center;
     margin-bottom: 16px;
   }
+}
+
+.users {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

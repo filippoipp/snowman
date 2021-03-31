@@ -1,20 +1,80 @@
 <template>
-  <div class="card">
-    <span>Luciano Gonçalves</span>
-    <button>Seguir</button>
+  <div class="user">
+    <span>{{name}}</span>
+    <button v-if="!verifyStatus" @click.prevent="followUser()">Seguir</button>
+    <button class="followed" v-else @click.prevent="unfollowUser()">Seguindo</button>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import FollowingController from '../controllers/followingController'
+
 export default {
- 
+  props: ["name", "following_id"],
+  data() {
+    return {
+      verifyStatus: false,
+      followingData: {
+        user_id: null,
+        following_id: null
+      }
+    };
+  },
+
+  computed: {
+    ...mapGetters(["currentUser"]),
+  },
+  
+  async created() {
+    this.followingController = new FollowingController();
+  },
+
+  mounted() {
+    this.followingData.user_id = this.currentUser.user_id;
+    this.followingData.following_id = this.following_id;
+    this.verify();
+  },
+
+  methods: {
+    async followUser() {
+      try {
+        await this.followingController.create(this.followingData)
+
+      } catch(err) {
+        alert(`${err}`);
+      } finally {
+        this.$router.go(0);
+      }
+    },
+
+    async verify() {
+      try {
+        this.verifyStatus = await this.followingController.verify(this.followingData)
+      } catch(err) {
+        console.log(err)
+      }
+    },
+
+    async unfollowUser() {
+      try {
+        await this.followingController.unfollow(this.followingData)
+      } catch(err) {
+        alert(`${err}`);
+      } finally {
+        this.$router.go(0);
+      }
+    }
+  },
 };
 </script>
 
-<style lang="scss">
-.card {
-  width: 190px;
-  height: 190px;
+<style lang="scss" scoped>
+.user {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  height: 100px;
   border-radius: 8px;
   box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);
   padding: 10px;
@@ -37,6 +97,11 @@ export default {
     font-weight: bold;
     line-height: 19px;
     text-align: center;
+  }
+  .followed {
+    background: #ffff;
+    border: 1px solid #10159A;
+    color: #10159A;
   }
 }
 </style>
