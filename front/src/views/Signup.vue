@@ -99,6 +99,7 @@ export default {
 }
 .signup-form {
   width: 400px;
+  height: 600px;
   padding: 40px;
   border-radius: 8px;
   background-color: #ffffff;
@@ -132,23 +133,8 @@ export default {
       font-weight: bold;
       letter-spacing: 0;
       line-height: 22px;
-      margin-bottom: 20px;
       margin-top: 20px;
     }
   } 
-  .footer {
-    color: #111236 !important;
-    font-size: 14px;
-    line-height: 19px;
-    text-align: center;
-    p {
-      font-weight: 400;
-    }
-    span {
-      font-weight: bold;
-      color: #111236 !important;
-      cursor: pointer;
-    }
-  }
 }
 </style>

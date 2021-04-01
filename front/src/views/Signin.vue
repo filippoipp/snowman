@@ -93,7 +93,7 @@ export default {
 
     loginError(val) {
       if (val != null) {
-        this.alert = true
+        alert('Verifique suas credenciais.')
       }
     },
   },

@@ -40,7 +40,7 @@ export default {
     async followUser() {
       try {
         await this.followingController.create(this.followingData)
-
+      
       } catch(err) {
         alert(`${err}`);
       } finally {

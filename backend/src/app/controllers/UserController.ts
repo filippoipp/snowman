@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRepository, Not } from 'typeorm'
+import { getRepository, Not, Like } from 'typeorm'
 
 import User from '../models/User'
 
@@ -22,8 +22,13 @@ class UserController {
     async getUsers(req: Request, res: Response) {
         try {
             const repository = getRepository(User);
+            let users
 
-            const users = await repository.find({ where: { id: Not(req.params.id) }});
+            if(req.params.name) {
+                users = await repository.find({ where: { id: Not(req.params.id), name: Like(`%${req.params.name}%`)}});
+            } else {
+                users = await repository.find({ where: { id: Not(req.params.id) }});
+            }
     
             return res.json(users)
         } catch(err) {

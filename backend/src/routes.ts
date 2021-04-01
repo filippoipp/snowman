@@ -10,7 +10,7 @@ import authMiddleware from './app/middlewares/authMiddleware';
 const router = Router();
 
 router.post('/users', UserController.store);
-router.get('/users/:id', authMiddleware, UserController.getUsers);
+router.get('/users/:id/:name?', authMiddleware, UserController.getUsers);
 router.post('/auth', AuthController.authenticate);
 router.post('/posts', authMiddleware, PostController.store)
 router.get('/posts', PostController.getAll)

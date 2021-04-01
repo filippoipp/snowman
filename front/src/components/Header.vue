@@ -17,7 +17,8 @@
       </div>
       <div class="search-logout" v-else>
         <div class="search">
-
+          <input type="text" placeholder="Pesquisar...">
+          <button>Ok</button>
         </div>
         <div @click.prevent="logout()">
           <p>Sair</p>
@@ -106,6 +107,30 @@ export default {
 .search-logout {
   display: flex;
   align-items: center;
+  
+  .search {
+    margin-right: 30px;
+    input {
+      height: 41px;
+      width: 226px;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+      padding-left: 10px;
+      margin-right: 5px;
+    }
+    button {
+      background: #10159a;
+      width: 50px;
+      height: 40px;
+      border-radius: 6px;
+      color: #ffff;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0;
+      line-height: 22px;
+    }
+  }
+
 
   p {
     color: #111236;
