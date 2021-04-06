@@ -5,7 +5,7 @@
         <v-avatar color="indigo" size="56">
           <v-icon size="56"> mdi-account-circle </v-icon>
         </v-avatar>
-        <p v-if="currentUser">Olá, <strong>{{ currentUser.name }}</strong></p>
+        <p v-if="currentUser">Olá, <router-link to="/feed"><strong>{{ currentUser.name }}</strong></router-link></p>
       </div>
       <div class="signin-signup" v-if="!currentUser">
         <router-link :to="'/signin'">
@@ -17,8 +17,8 @@
       </div>
       <div class="search-logout" v-else>
         <div class="search">
-          <input type="text" placeholder="Pesquisar...">
-          <button>Ok</button>
+          <input type="text" placeholder="Pesquisar..." v-model="name">
+          <button @click.prevent="searchByName()">Ok</button>
         </div>
         <div @click.prevent="logout()">
           <p>Sair</p>
@@ -32,16 +32,26 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
+  data() {
+    return {
+      name: null
+    };
+  },
+
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGetters(["currentUser", "search"]),
   },
 
   methods: {
-    ...mapActions(["signOut"]),
+    ...mapActions(["signOut", "searchUsers"]),
 		async logout() {
 			await this.signOut()
 			this.$router.push("/")
 		},
+    searchByName() {
+      this.searchUsers(this.name)
+      this.$router.push("/search")
+    }
   }
 };
 </script>
@@ -74,7 +84,11 @@ export default {
     color: #111236;
     font-size: 16px;
     line-height: 22px;
+    a {
+      text-decoration: none;
+      color: #111236;
     }
+  }
 }
 
 .signin-signup {

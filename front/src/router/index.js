@@ -28,6 +28,22 @@ const routes = [
     meta: {
 			requiresAuth: true
 		},
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import(/* webpackChunkName: "about" */ '../views/User.vue'),
+    meta: {
+			requiresAuth: true
+		},
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Search.vue'),
+    meta: {
+			requiresAuth: true
+		},
   }
 ]
 

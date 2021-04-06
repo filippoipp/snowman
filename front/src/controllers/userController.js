@@ -16,9 +16,9 @@ export default class UserController {
 		}
 	}
 
-	async getUsers(id) {
+	async getUsers(id, name) {
 		try {
-			const users = await api.get(`/users/${id}`);
+			const users = await api.get(`/users/${id}/${name}`);
 			return users.data;
 		} catch(e) {
 			console.log(e)

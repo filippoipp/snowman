@@ -73,11 +73,13 @@ export default {
 .user {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 180px;
-  height: 100px;
+  height: 150px;
   border-radius: 8px;
   box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);
   padding: 10px;
+  margin-right: 10px;
   span {
     color: #10159A;
     font-size: 18px;
