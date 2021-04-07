@@ -1,9 +1,8 @@
-import api from "../services/service.api";
-
+import axios from 'axios'
 export default class PostController {
     async getAll() {
 		try {
-			const posts = await api.get("/posts");
+			const posts = await axios.get("/posts");
 			return posts.data;
 		} catch(e) {
 			console.log(e)
@@ -13,7 +12,7 @@ export default class PostController {
 
 	async getForFeed(userid) {
 		try {
-			const posts = await api.get(`/posts-feed/${userid}`);
+			const posts = await axios.get(`/posts-feed/${userid}`);
 			return posts.data;
 		} catch(e) {
 			console.log(e)
@@ -23,7 +22,7 @@ export default class PostController {
 
 	async create(newPost) {	
 		try {
-			const post = await api.post("/posts", newPost);
+			const post = await axios.post("/posts", newPost);
 			return post.data;
 		} catch(e) {
 			console.log(e)

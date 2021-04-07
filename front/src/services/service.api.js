@@ -1,12 +1,32 @@
-import axios from "axios"
-import store from '../store'
+import axios from 'axios';
+import TokenService from './service.token';
 
-const api = axios.create({
-	baseURL: process.env.VUE_APP_API_ROOT_URL,
-	headers: {
-		Authorization:
-			`Bearer ${store.getters.currentUser ? store.getters.currentUser.token : ''}`
-	}
-});
+class ApiService {
+  constructor() {
+    this.interceptor401 = null;
+    axios.defaults.baseURL = process.env.VUE_APP_API_ROOT_URL;
+  }
 
-export default api;
+  setHeaderAuthorization() {
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${TokenService.getToken()}`;
+  }
+
+  removeHeaderAuthorization() {
+    axios.defaults.headers.common = {};
+  }
+
+  unmount401Interceptor() {
+    axios.interceptors.response.eject(this.interceptor401);
+  }
+
+  async customRequest(data) {
+    this.removeHeaderAuthorization();
+    const response = await axios(data);
+    this.setHeaderAuthorization();
+    return response;
+  }
+}
+
+export default new ApiService();

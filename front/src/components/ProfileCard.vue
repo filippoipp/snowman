@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <span>{{name}}</span>
+    <span @click.prevent="goToUseProfile()">{{name}}</span>
     <button v-if="!verifyStatus" @click.prevent="followUser()">Seguir</button>
     <button class="followed" v-else @click.prevent="unfollowUser()">Seguindo</button>
   </div>
@@ -88,6 +88,10 @@ export default {
     line-height: 22px;
     text-align: center;
     margin-bottom: 10px;
+    cursor: pointer;
+    &:hover {
+      color: black;
+    }
   }
   button {
     height: 32px;

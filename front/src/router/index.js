@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import store from '../store'
+import TokenService from '../services/service.token';
 
 Vue.use(VueRouter)
 
@@ -9,41 +9,44 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      public: true,
+      onlyWhenLoggedOut: true,
+    },
   },
   {
     path: '/signin',
     name: 'Signin',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Signin.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Signin.vue'),
+    meta: {
+      public: true,
+      onlyWhenLoggedOut: true,
+    },
   },
   {
     path: '/signup',
     name: 'Signup',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Signup.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Signup.vue'),
+    meta: {
+      public: true,
+      onlyWhenLoggedOut: true,
+    },
   },
   {
     path: '/feed',
     name: 'Feed',
     component: () => import(/* webpackChunkName: "about" */ '../views/Feed.vue'),
-    meta: {
-			requiresAuth: true
-		},
   },
   {
     path: '/user',
     name: 'User',
     component: () => import(/* webpackChunkName: "about" */ '../views/User.vue'),
-    meta: {
-			requiresAuth: true
-		},
   },
   {
     path: '/search',
     name: 'Search',
     component: () => import(/* webpackChunkName: "about" */ '../views/Search.vue'),
-    meta: {
-			requiresAuth: true
-		},
   }
 ]
 
@@ -54,15 +57,26 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.currentUser) {
-      next({ name: 'Signin' })
-    } else {
-      next() // go to wherever I'm going
-    }
-  } else {
-    next() // does not require auth, make sure to always call next()!
+  const isPublic = to.matched.some(record => record.meta.public);
+  // const isClient = to.matched.some(record => record.meta.client);
+  const onlyWhenLoggedOut = to.matched.some(
+    record => record.meta.onlyWhenLoggedOut
+  );
+  const loggedIn = !!TokenService.getToken();
+
+  if (!isPublic && !loggedIn) {
+    return next({
+      path: '/',
+    });
+    // query: { redirect: to.fullPath, type: 'checked' },
   }
-})
+
+  // Do not allow user to visit login page or register page if they are logged in
+  if (onlyWhenLoggedOut && loggedIn) {
+    return next('/feed');
+  }
+
+  next();
+});
 
 export default router

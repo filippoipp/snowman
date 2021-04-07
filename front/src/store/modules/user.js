@@ -1,5 +1,7 @@
-import AuthController from "../../controllers/authController";
+import axios from 'axios'
 import { setCurrentUser, getCurrentUser, setCurrentSearch, getCurrentSearch } from "../../utils";
+import TokenService from '../../services/service.token';
+import ApiService from '../../services/service.api';
 
 export default {
   state: {
@@ -56,18 +58,22 @@ export default {
       commit("clearError");
       commit("setProcessing", true);
 
-      const authController = new AuthController();
-
       try {
-        const user = await authController.login(
-          payload.email,
-          payload.password
-        );
+        const user = await axios.post('/auth', {
+          email: payload.email,
+          password: payload.password
+        })
 
-        const item = { token: user.token, user_id: user.user.id, name: user.user.name };
-        setCurrentUser(item);
+        TokenService.setToken(user.data.token);
+
+        ApiService.setHeaderAuthorization();
+
+        const item = { token: user.data.token, user_id: user.data.user.id, name: user.data.user.name };
+        await setCurrentUser(item);
         commit("setUser", item);
+        console.log('chegou')
       } catch (err) {
+        console.log(err)
         setCurrentUser(null);
         commit("setError", err.message);
         setTimeout(() => {
@@ -82,6 +88,10 @@ export default {
     },
 
     signOut({ commit }) {
+      TokenService.removeToken();
+      TokenService.removeRefreshToken();
+      ApiService.removeHeaderAuthorization();
+      ApiService.unmount401Interceptor();
       setCurrentUser(null);
       commit("setLogout");
     },

@@ -3,7 +3,6 @@
     <Header />
     <div class="content">
       <h1 class="title">Resultados de Busca</h1>
-      <div class="follow-users">
         <div class="users">
           <div v-for="(user, index) in users" :key="index">
             <ProfileCard
@@ -12,7 +11,6 @@
             />
           </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -22,6 +20,7 @@ import Header from "../components/Header";
 import ProfileCard from "../components/ProfileCard"
 import UserController from "../controllers/userController"
 import { mapGetters } from "vuex";
+import ApiService from '../services/service.api'
 
 export default {
   components: {
@@ -49,7 +48,7 @@ export default {
 
   methods: {
     async getUsers() {
-        console.log(this.search)
+      ApiService.setHeaderAuthorization();
       try {
         this.users = await this.userController.getUsers(
           this.currentUser.user_id, this.search
@@ -70,6 +69,7 @@ export default {
   align-items: center;
   align-self: center;
   margin: 0px 300px;
+  border: none !important;
 }
 
 .title {
@@ -80,22 +80,6 @@ export default {
   line-height: 38px;
   align-self: flex-start;
   margin-bottom: 42px;
-}
-
-.follow-users {
-  width: 621px;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 26px;
-  padding: 23px 18px 18px 23px;
-  span {
-    color: #111236;
-    font-size: 16px;
-    line-height: 22px;
-    text-align: center;
-    margin-bottom: 16px;
-  }
 }
 
 .users {

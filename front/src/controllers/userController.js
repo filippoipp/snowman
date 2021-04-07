@@ -1,9 +1,9 @@
-import api from "../services/service.api";
+import axios from 'axios'
 
 export default class UserController {
 	async create(name, email, password) {	
 		try {
-			const user = await api.post("/users", {
+			const user = await axios.post("/users", {
 				name: name,
 				email: email,
 				password: password
@@ -17,8 +17,14 @@ export default class UserController {
 	}
 
 	async getUsers(id, name) {
+		if (name) {
+			var url = `/users/${id}/${name}`
+		}
+		else {
+			url = `/users/${id}`
+		}
 		try {
-			const users = await api.get(`/users/${id}/${name}`);
+			const users = await axios.get(`${url}`);
 			return users.data;
 		} catch(e) {
 			console.log(e)

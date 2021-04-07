@@ -37,6 +37,7 @@ import ProfileCard from "../components/ProfileCard"
 import PostController from "../controllers/postController";
 import UserController from "../controllers/userController"
 import { mapGetters } from "vuex";
+import ApiService from '../services/service.api'
 
 export default {
   components: {
@@ -69,6 +70,7 @@ export default {
 
   methods: {
     async getPosts() {
+      ApiService.setHeaderAuthorization();
       try {
         this.posts = await this.postController.getForFeed(
           this.currentUser.user_id

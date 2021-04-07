@@ -14,7 +14,7 @@ router.get('/users/:id/:name?', authMiddleware, UserController.getUsers);
 router.post('/auth', AuthController.authenticate);
 router.post('/posts', authMiddleware, PostController.store)
 router.get('/posts', PostController.getAll)
-router.get('/posts-user', authMiddleware, PostController.getUserPosts)
+router.get('/posts-user/:userid', authMiddleware, PostController.getUserPosts)
 router.get('/posts-feed/:userid', authMiddleware, PostController.getPostsForFeed)
 router.post('/following', authMiddleware, FollowingController.store)
 router.get('/verify-following/:userid/:followingid', authMiddleware, FollowingController.verify)
