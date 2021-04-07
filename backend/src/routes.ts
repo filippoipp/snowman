@@ -11,6 +11,7 @@ const router = Router();
 
 router.post('/users', UserController.store);
 router.get('/users/:id/:name?', authMiddleware, UserController.getUsers);
+router.get('/user/:id', authMiddleware, UserController.getUser);
 router.post('/auth', AuthController.authenticate);
 router.post('/posts', authMiddleware, PostController.store)
 router.get('/posts', PostController.getAll)

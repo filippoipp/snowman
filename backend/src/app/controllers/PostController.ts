@@ -22,9 +22,7 @@ class PostController {
     async getUserPosts(req: Request, res: Response) {
         try {
             const repository = getRepository(Post);
-
             const posts = await repository.find({ where: { user_id: req.params.userid }});
-    
             return res.json(posts)
         } catch(err) {
             console.log(err)

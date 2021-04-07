@@ -16,6 +16,17 @@ export default class UserController {
 		}
 	}
 
+	async getUser(id) {
+		try {
+			const user = await axios.get(`/user/${id}`)
+
+			return user.data
+		} catch(e) {
+			console.log(e)
+			throw e
+		}
+	}
+
 	async getUsers(id, name) {
 		if (name) {
 			var url = `/users/${id}/${name}`

@@ -18,6 +18,19 @@ class UserController {
 
         return res.json(user)
     }
+
+    async getUser(req: Request, res: Response) {
+        try {
+            const repository = getRepository(User);
+
+            const user = await repository.findOne({ where: { id: req.params.id }})
+
+            return res.json(user)
+        } catch(err) {
+            console.log(err)
+            return err
+        }
+    }
     
     async getUsers(req: Request, res: Response) {
         try {

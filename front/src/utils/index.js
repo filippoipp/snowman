@@ -20,6 +20,17 @@ export const getCurrentSearch = () => {
   return name;
 }
 
+export const getCurrentViewUser = () => {
+  let viewUser = null;
+  try {
+    viewUser = localStorage.getItem('viewUser') != null ? JSON.parse(localStorage.getItem('viewUser')) : null;
+  } catch (error) {
+    console.log(">>>> src/utils/index.js : getCurrentViewUser -> error", error)
+    viewUser = null;
+  }
+  return viewUser;
+}
+
 export const setCurrentUser = (user) => {
   try {
     if (user) {
@@ -41,5 +52,17 @@ export const setCurrentSearch = (name) => {
     }
   } catch (error) {
     console.log(">>>> src/utils/index.js : setCurrentSearch -> error", error)
+  }
+}
+
+export const setCurrentViewUser = (user) => {
+  try {
+    if (user) {
+      localStorage.setItem('viewUser', JSON.stringify(user))
+    } else {
+      localStorage.removeItem('viewUser');
+    }
+  } catch (error) {
+    console.log(">>>> src/utils/index.js : setCurrentViewUser -> error", error)
   }
 }

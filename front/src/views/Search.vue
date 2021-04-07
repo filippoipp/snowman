@@ -3,13 +3,16 @@
     <Header />
     <div class="content">
       <h1 class="title">Resultados de Busca</h1>
-        <div class="users">
+        <div v-if="users.length" class="users">
           <div v-for="(user, index) in users" :key="index">
             <ProfileCard
               :name="user.name"
               :following_id="user.id"
             />
           </div>
+        </div>
+        <div v-else>
+          <span>Não encontramos o que você procura, tente novamente!</span>
         </div>
     </div>
   </div>
@@ -58,6 +61,16 @@ export default {
       }
     }
   },
+
+  watch: {
+    search(val) {
+      if (val) {
+        setTimeout(() => {
+          this.$router.go(0);
+        }, 200);
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

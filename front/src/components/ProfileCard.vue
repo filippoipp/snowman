@@ -1,13 +1,13 @@
 <template>
   <div class="user">
-    <span @click.prevent="goToUseProfile()">{{name}}</span>
+    <span @click.prevent="goToUser()">{{name}}</span>
     <button v-if="!verifyStatus" @click.prevent="followUser()">Seguir</button>
     <button class="followed" v-else @click.prevent="unfollowUser()">Seguindo</button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import FollowingController from '../controllers/followingController'
 
 export default {
@@ -18,7 +18,7 @@ export default {
       followingData: {
         user_id: null,
         following_id: null
-      }
+      },
     };
   },
 
@@ -37,6 +37,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(["viewUser"]),
     async followUser() {
       try {
         await this.followingController.create(this.followingData)
@@ -64,6 +65,11 @@ export default {
       } finally {
         this.$router.go(0);
       }
+    },
+
+    goToUser() {
+      this.viewUser(this.following_id)
+      this.$router.push('/user')
     }
   },
 };

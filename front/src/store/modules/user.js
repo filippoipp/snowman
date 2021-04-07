@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setCurrentUser, getCurrentUser, setCurrentSearch, getCurrentSearch } from "../../utils";
+import { setCurrentUser, getCurrentUser, setCurrentSearch, getCurrentSearch, getCurrentViewUser, setCurrentViewUser } from "../../utils";
 import TokenService from '../../services/service.token';
 import ApiService from '../../services/service.api';
 
@@ -8,13 +8,15 @@ export default {
     currentUser: getCurrentUser(),
     loginError: null,
     processing: false,
-    search: getCurrentSearch()
+    search: getCurrentSearch(),
+    viewUser: getCurrentViewUser()
   },
   getters: {
     currentUser: state => state.currentUser,
     processing: state => state.processing,
     loginError: state => state.loginError,
-    search: state => state.search
+    search: state => state.search,
+    viewUser: state => state.viewUser
   },
   mutations: {
     setUser(state, payload) {
@@ -38,6 +40,9 @@ export default {
     },
     setSearch(state, payload) {
       state.search = payload
+    },
+    setViewUser(state, payload) {
+      state.viewUser = payload
     },
     setForgotMailSuccess(state) {
       state.loginError = null;
@@ -85,6 +90,11 @@ export default {
     searchUsers({ commit }, payload) {
       setCurrentSearch(payload);
       commit("setSearch", payload);    
+    },
+
+    viewUser({ commit }, payload) {
+      setCurrentViewUser(payload);
+      commit("setViewUser", payload)
     },
 
     signOut({ commit }) {
